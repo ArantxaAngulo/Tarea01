@@ -2,6 +2,28 @@
 #include<stdbool.h>
 #include<math.h>
 
+void binario(int a){
+    
+    int i;
+    char x;
+
+    for (i = 32; i > 0; i-- ){
+
+        x = a >> i-1;
+
+        x = x & 1;
+
+        printf("%d", x);
+        if ((i+3)%4 == 0 && i != 1){
+            printf(" ");
+        }
+
+
+    }
+
+    return;
+}
+
 void mostrarNumeros(int a, int b){
 
     //decimal
@@ -55,71 +77,27 @@ void mostrarNumeros(int a, int b){
 
 void mostrarAnd(int a, int b){
 
-    int i = 32;
-    char x;
-    char y;
-
-    
     printf("\n=================================================\n");
     printf("|   A   |");
 
     //Imprime int a en binario
-    for(i; i > 0; i--){
-
-        //Al igual que el anterior separa todo en una cadena de bits
-        x = a >> i-1; 
-        x = x & 1;
+    binario(a);
+    printf("|");
 
 
-        printf("%d", x);
-        if((i+3)%4 == 0 && i != 1){ //Da un espacio cada 4 bits
-            printf(" ");
-        } else if(i == 1){ //imprime una barra para darle formato de tabla
-            printf("|");
-        }
-    }
-
-
-    printf("\n=================================================\n"); //Separador
+    printf("\n=================================================\n");
     printf("|   B   |");
-    i = 32;
 
     //Imprimer int b en binario
-    for(i; i > 0; i--){
-
-        y = b >> i-1;
-        y = y & 1;
-
-        printf("%d", y);
-        if((i+3)%4 == 0 && i != 1){
-            printf(" ");
-        } else if(i == 1){
-            printf("|");
-        }
-    }
-
+    binario(b);
+    printf("|");
     
-    printf("\n=================================================\n");//Separador
+    printf("\n=================================================\n");
     printf("|A AND B|");
-    i = 32;
 
-    for(i; i > 0; i--){
-
-        //Ahora obtenemos la cadena de bits de ambos numeros al mismo tiempo y les aplicamos un and
-        x = a >> i-1;
-        x = x & 1;
-
-        y = b >> i-1;
-        y = y & 1;
-
-        printf("%d", y&x);
-        if((i+3)%4 == 0 && i != 1){
-            printf(" ");
-        } else if(i == 1){
-            printf("|");
-        }
-
-    }
+    //Imprime a%b en binario
+    binario(a&b);
+    printf("|");
 
     printf("\n=================================================\n");
 
@@ -127,10 +105,41 @@ void mostrarAnd(int a, int b){
    
 
     return;
-    
+
 }
 
-void mostrarOr(int, int);
+void mostrarOr(int a, int b){
+     
+    printf("\n=================================================\n");
+    printf("|   A   |");
+
+    //Imprime int a en binario
+    binario(a);
+    printf("|");
+
+
+    printf("\n=================================================\n");
+    printf("|   B   |");
+
+    //Imprimer int b en binario
+    binario(b);
+    printf("|");
+    
+    printf("\n=================================================\n");
+    printf("|A  OR B|");
+
+    //Imprime a%b en binario
+    binario(a|b);
+    printf("|");
+
+    printf("\n=================================================\n");
+
+    printf("\n%d AND %d = %d\n", a, b, a|b);
+   
+
+    return;
+
+}
 
 void mostrarNot(int);
 
