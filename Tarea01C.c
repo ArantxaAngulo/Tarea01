@@ -42,29 +42,31 @@ void mostrarNumeros(int a, int b){
     
     if (b == 1){ //decimal
         
-        printf("%d en decimal es: ", a);
-        printf("%d", a);
+        printf("%d en decimal es: %d\n", a, a);
 
     } else if(b == 2){ //binario
 
         int i;
         char x;
 
+        //Empieza en 32 porque usamos y para saber la posición del bit que queremos leer
         printf("%d en binario es: ", a);
 
         for (i = 32; i > 0; i-- ){
-
+            //Movemos el el bit que bsucamos hasta el final de la cadena de bits
             x = a >> i-1;
-
+            //Amplicamos un and con una mascara para obtener su valor y guardarlo en x
             x = x & 1;
 
+            //Este if es para no imprimir todos los ceros inesesarios del principio
             if (a > pow(2, i-1)){
                 printf("%d", x);
-                if ((i+3)%4 == 0 && i != 1){
+                if ((i+3)%4 == 0 && i != 1){ //Da un espacio cada 8 bits
                     printf(" ");
-                } else if(i == 1){
+                } else if(i == 1){ //Solo para dar un salto de renglon
                 printf("\n");
                 }
+            //Por si el numero es negativo ya que no entrara al condicional de arriva
             } else if(a < 0){
                 printf("%d", x);
                 if ((i+3)%4 == 0 && i != 1){
@@ -82,8 +84,9 @@ void mostrarNumeros(int a, int b){
         printf("%d en hexadecimal es: ", a);
         printf("0x%X\n", a);
 
-    } else if("Respuesta invalida\n");
-    
+    } else {
+        printf("Respuesta invalida\n");
+    }
     return;
 }
 
@@ -107,9 +110,7 @@ void mostrarAnd(int c){
         b++;
         printf("| 1 | 1 |   %d   |\n", a&b);
         printf("=================\n");
-    }
-
-    if(c == 2){
+    } else if(c == 2){
 
         printf("Introduce el numero 1: ");
         int a = request();
@@ -141,6 +142,8 @@ void mostrarAnd(int c){
         printf("\n=================================================\n");
 
         printf("\n%d AND %d = %d\n", a, b, a&b);
+    } else {
+        printf("Respuesta no valida\n");
     }
    
     return;
@@ -166,9 +169,7 @@ void mostrarOr(int c){
         b++;
         printf("| 1 | 1 |   %d   |\n", a|b);
         printf("=================\n");
-    }
-
-    if(c == 2){
+    } else if(c == 2){
 
         printf("Introduce el numero 1: ");
         int a = request();
@@ -201,38 +202,68 @@ void mostrarOr(int c){
 
         printf("\n%d OR %d = %d\n", a, b, a|b);
 
+    } else {
+        printf("Respuesta no valida\n");
     }
 
     return;
 }
 
-void mostrarNot(){
+void mostrarNot(int c){
 
-    bool a = false;
-    bool b = false;
+    if(c == 1){
+        bool a = false;
+        bool b = false;
 
-    printf("=====================\n");
-    printf("| A | B |NOT A|NOT B|\n");
-    printf("=====================\n");
-    printf("| 0 | 0 |  %d  |  %d  |\n", ~a+2, ~b+2);
-    printf("=====================\n");
-    b = ~b;
-    printf("| 0 | 1 |  %d  |  %d  |\n", ~a+2, ~b+2);
-    printf("=====================\n");
-    a = ~a;
-    printf("| 1 | 0 |  %d  |  %d  |\n", ~a+2, ~b+2);
-    printf("=====================\n");
-    a = ~a;
-    b = ~b;
-    printf("| 1 | 1 |  %d  |  %d  |\n", ~a+2, ~b+2);
-    printf("=====================\n");
+        printf("=====================\n");
+        printf("| A | B |NOT A|NOT B|\n");
+        printf("=====================\n");
+        printf("| 0 | 0 |  %d  |  %d  |\n", !a, !b);
+        printf("=====================\n");
+        b = true;
+        printf("| 0 | 1 |  %d  |  %d  |\n", !a, !b);
+        printf("=====================\n");
+        a = true;
+        b = false;
+        printf("| 1 | 0 |  %d  |  %d  |\n", !a, !b);
+        printf("=====================\n");
+        a = ~a;
+        b = ~b;
+        printf("| 1 | 1 |  %d  |  %d  |\n", !a, !b);
+        printf("=====================\n");
+
+    } else if(c == 2){
+
+        int i = 32;
+        char x, y;
+
+        printf("Introduce el numero: ");
+        int a = request();
+
+        printf("\n=================================================\n");
+        printf("|   %d  |",a);
+        //Imprime int a en binario
+            binario(a);
+            printf("|");
+
+
+        printf("\n=================================================\n");//Separador
+        printf("| NOT %d|",a);
+            binario(~a);
+            printf("|");
+
+        printf("\n=================================================\n");
+
+    } else {
+        printf("Respuesta no valida\n");
+    }
 
     return;
 }
 
 int menu(){
 
-    printf("\nBIENVENIDO AL PROGRAMA\n"); 
+    printf("\n");
     printf("1) Mostrar numero en otros formatos (Decimal, Binario y Hexadecimal)\n");
     printf("2) Mostrar tabla de verdad de AND\n");
     printf("3) Mostrar tabla de verdad de OR\n"); 
@@ -290,43 +321,58 @@ void menuDos(){
        float volumen = pow(a,3);
         printf("El volumen es %.2f \n", volumen);
 
-    }
-
-
-    if(p == 2){
+    } else if(p == 2){
         
-        float BLado1,BLado2,BLado3,altura;
+        double BLado1,BLado2,BLado3,altura;
 
         printf("Introduce el lado 1 de la base del prisma triangular: ");
         fgets(buffer, 256, stdin);
-        sscanf(buffer, "%f", &BLado1);
+        sscanf(buffer, "%lf", &BLado1);
         printf("\nIntroduce el lado 2 de la base del prisma triangular: ");
         fgets(buffer, 256, stdin);
-        sscanf(buffer, "%f", &BLado2);
+        sscanf(buffer, "%lf", &BLado2);
         printf("\nIntroduce el lado 3 de la base del prisma triangular: ");
         fgets(buffer, 256, stdin);
-        sscanf(buffer, "%f", &BLado3);
+        sscanf(buffer, "%lf", &BLado3);
         printf("\nIntroduce la altura del prisma triangular: ");
         fgets(buffer, 256, stdin);
-        sscanf(buffer, "%f", &altura);
-    }
+        sscanf(buffer, "%lf", &altura);
 
-    if(p == 3){
+        double semiPeri = (BLado1 + BLado2 + BLado3 ) / ((double)2) ;
+        double Heron = ((semiPeri)*(semiPeri-BLado1)*(semiPeri-BLado2)*(semiPeri-BLado3));
+        double areaBase = (pow(Heron,(0.5)));
+        double areaLat = (BLado1+BLado2+BLado3)*altura;
+
+        double volumen = (areaBase * altura);
+        printf("El volumen es %.2lf \n", volumen);
+
+        double areaTot = (2 * areaBase) + areaLat;
+        printf("El area es %.2lf \n", areaTot);
+
+    } else if(p == 3){
         
-        float BLado1,BLado2,altura;
+        double BLado1,altura;
 
-        printf("Introduce la longitud de uno de los lados de la base del prisma pentagonal \n");
+        printf("Introduce la longitud de uno de los lados de la base del prisma pentagonal: ");
         fgets(buffer, 256, stdin);
-        sscanf(buffer, "%f", &BLado1);
-        printf("Introduce el apotema del prisma pentagonal \n");
+        sscanf(buffer, "%lf", &BLado1);
+        printf("Introduce la altura del prisma pentagonal: ");
         fgets(buffer, 256, stdin);
-        sscanf(buffer, "%f", &BLado2);
-        printf("Introduce la altura del prisma pentagonal \n");
-        fgets(buffer, 256, stdin);
-        sscanf(buffer, "%f", &altura); 
-    }
+        sscanf(buffer, "%lf", &altura);
 
-    if(p == 4){
+            
+        double radianes = 36*(M_PI/180);
+        double apotema = BLado1/tan(radianes);
+
+        double apH = apotema + altura;
+        float areaTot = (5*BLado1)*apH;
+        printf("El area es %.2f \n", areaTot);
+
+        float volumen = apotema * BLado1 * altura;
+        volumen = (2.5)*volumen;
+        printf("El volumen es %.2f \n", volumen);
+
+    } else if(p == 4){
         
         float BLado1;
 
@@ -334,16 +380,13 @@ void menuDos(){
         fgets(buffer, 256, stdin);
         sscanf(buffer, "%f", &BLado1);
         
-        float area = pow(BLado1, 2)*pow(3, (1/2));
-        float volumen =  ( pow(BLado1, 3) * pow(2, (1/2)) /12 );
+        float area = pow(BLado1, 2)*sqrt(3);
+        float volumen =  ( pow(BLado1, 3) * sqrt(2) /12 );
 
         printf("Area    = %.2lf u^2\n", area);
         printf("Volumen = %.2lf u^3\n", volumen);
 
-
-    }
-
-    if(p == 5){
+    } else if(p == 5){
         
         double radio;
 
@@ -357,14 +400,16 @@ void menuDos(){
         printf("Area    = %.2lf u^2\n", area);
         printf("Volumen = %.2lf u^3\n", volumen);
 
+    } else {
+        printf("Respuesta no valida\n");
     }
 
     return;
     
 }
 
-int main(){
-    
+void programa(){
+
     int x = menu();
 
     if(x == 1){
@@ -385,9 +430,7 @@ int main(){
 
         mostrarNumeros(a, b);
 
-    }
-
-    if(x == 2){
+    } else if(x == 2){
 
         printf("Quieres la tabla o el AND de 2 numeros:\n");
         printf("1) Tabla de verdad\n2) AND de 2 numeros\n");
@@ -395,9 +438,7 @@ int main(){
         int c = request();
         mostrarAnd(c);
 
-    }
-
-    if(x == 3){
+    } else if(x == 3){
 
         printf("Quieres la tabla o el OR de 2 numeros:\n");
         printf("1) Tabla de verdad\n2) OR de 2 numeros\n");
@@ -405,18 +446,38 @@ int main(){
         int r = request();
         mostrarOr(r);
 
-    }
+    } else if(x == 4){
 
-    if(x == 4){
-        mostrarNot();
-    }
+        printf("Quieres la tabla o el NOT de un numero\n");
+        printf("1) Tabla de verdad\n2) NOT de 1 numero\n");
+        printf("Tu eleccion es: ");
+        int h = request();
+        mostrarNot(h);
 
-    if(x == 5){
+    } else if(x == 5){
         menuDos();
+    } else {
+        printf("Respuesta no valida\n");
     }
 
+    int continuar;
 
-    return 0;
-    
+    printf("\nPresiona 1 para continuar o cualquier otra tecla para salir  .  .  .  .  ");
+    continuar = request();
+
+    if (continuar == 1){
+        programa();
+    } else {
+        printf("Bye...\nFin del programa");
+    }
+
 }
 
+
+int main(){
+    
+    printf("\nBIENVENIDO AL PROGRAMA\n"); 
+    programa();
+    
+    return 0;
+}
